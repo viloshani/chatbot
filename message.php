@@ -3,8 +3,8 @@
 $conn = mysqli_connect("localhost", "root", "", "abc_chatbot") or die("Database Error");
 $getMesg = mysqli_real_escape_string($conn, $_POST['text']);
 
-$get_reply = "SELECT id,reply FROM chatbot WHERE queries = '$getMesg' OR queries LIKE '%$getMesg%'";
-// $get_reply = "SELECT id,reply FROM chatbot WHERE queries = '$getMesg' UNION ALL SELECT id,reply FROM chatbot WHERE queries LIKE '%$getMesg%' AND NOT EXISTS (SELECT 1 FROM chatbot c WHERE c.queries = '$getMesg') limit 1";
+// $get_reply = "SELECT id,reply FROM chatbot WHERE queries = '$getMesg' OR queries LIKE '%$getMesg%'";
+$get_reply = "SELECT id,reply FROM chatbot WHERE queries = '$getMesg' UNION ALL SELECT id,reply FROM chatbot WHERE queries LIKE '%$getMesg%' AND NOT EXISTS (SELECT 1 FROM chatbot c WHERE c.queries = '$getMesg') limit 1";
 $run_reply_query = mysqli_query($conn, $get_reply) or die("Error");
 
 if(mysqli_num_rows($run_reply_query) > 0){
